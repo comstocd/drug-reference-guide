@@ -447,8 +447,15 @@
         }
         
         /* Responsive */
+        @media (max-width: 1024px) {
+            .specialty-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
-            .category-grid {
+            .category-grid,
+            .specialty-container {
                 grid-template-columns: 1fr;
             }
             
@@ -490,6 +497,91 @@
         .cat-pain { --cat-color: #ea580c; }
         .cat-psych { --cat-color: #6366f1; }
         .cat-other { --cat-color: #64748b; }
+
+        /* Specialty Navigation */
+        .specialty-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+        
+        .specialty-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.2s;
+        }
+        
+        .specialty-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .specialty-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .specialty-icon {
+            font-size: 20px;
+        }
+        
+        .specialty-name {
+            font-weight: 700;
+            font-size: 12pt;
+        }
+        
+        .specialty-links {
+            padding: 12px 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .specialty-links a {
+            display: inline-block;
+            padding: 5px 10px;
+            background: var(--bg-light);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            font-size: 10pt;
+            color: var(--text);
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .specialty-links a:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        /* Collapsible specialty sections */
+        .nav-section h2 {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .nav-section h2::after {
+            content: ' ▼';
+            font-size: 10pt;
+            opacity: 0.5;
+        }
+        
+        .nav-section.collapsed .category-grid,
+        .nav-section.collapsed .specialty-container {
+            display: none;
+        }
+        
+        .nav-section.collapsed h2::after {
+            content: ' ▶';
+        }
+
     </style>
 </head>
 <body>
@@ -498,8 +590,8 @@
     <h1>💊 Comprehensive Drug Reference Guide</h1>
     <p class="subtitle">Clinical Pharmacology for Hospital Medicine • Cross-linked to IMCRG, Nephrology, Rheumatology & ID Guides</p>
     <div class="header-stats">
-        <span class="stat-badge">📊 500+ Medications</span>
-        <span class="stat-badge">📁 45 Categories</span>
+        <span class="stat-badge">📊 172 Medications</span>
+        <span class="stat-badge">🏥 12 Specialties • 📁 42 Categories</span>
         <span class="stat-badge">🔗 Cross-Referenced</span>
         <span class="stat-badge">📱 iPad Optimized</span>
     </div>
@@ -516,207 +608,356 @@
 <div class="container">
 
 <!-- NAVIGATION -->
+<!-- SPECIALTY NAVIGATION -->
+<div class="nav-section" id="specialty-nav">
+    <h2 class="nav-title">🏥 Browse by Medical Specialty</h2>
+    <div class="specialty-container">
+        
+        <div class="specialty-card" id="spec-id">
+            <div class="specialty-header">
+                <span class="specialty-icon">🦠</span>
+                <span class="specialty-name">Infectious Disease</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#antibiotics-penicillins">Penicillins</a>
+                <a href="#antibiotics-cephalosporins">Cephalosporins</a>
+                <a href="#antibiotics-carbapenems">Carbapenems</a>
+                <a href="#antibiotics-glycopeptides">Glycopeptides</a>
+                <a href="#antibiotics-fluoroquinolones">Fluoroquinolones</a>
+                <a href="#antibiotics-other">Other Antibiotics</a>
+                <a href="#antibiotics-additional">Additional Abx</a>
+                <a href="#antifungals">Antifungals</a>
+                <a href="#antivirals">Antivirals</a>
+                <a href="#antiparasitics">Antiparasitics</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-cards">
+            <div class="specialty-header">
+                <span class="specialty-icon">❤️</span>
+                <span class="specialty-name">Cardiology</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#cardiac-antihypertensives">Antihypertensives</a>
+                <a href="#cardiac-antiarrhythmics">Antiarrhythmics</a>
+                <a href="#cardiac-additional">Nitrates/Statins/ARNI</a>
+                <a href="#anticoagulants">Anticoagulants</a>
+                <a href="#anticoag-additional">DTIs/Fondaparinux</a>
+                <a href="#hematology">Antiplatelets/TXA</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-pulm-cc">
+            <div class="specialty-header">
+                <span class="specialty-icon">🫁</span>
+                <span class="specialty-name">Pulm / Critical Care</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#pulmonary">Bronchodilators/ICS</a>
+                <a href="#cardiac-vasopressors">Vasopressors/Inotropes</a>
+                <a href="#icu-sedation">ICU Sedation</a>
+                <a href="#anesthesia">Paralytics/Induction</a>
+                <a href="#pain-sedation">Opioids/Sedatives</a>
+                <a href="#electrolytes">Electrolyte Replacement</a>
+                <a href="#reversal">Reversal Agents</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-gi">
+            <div class="specialty-header">
+                <span class="specialty-icon">🫃</span>
+                <span class="specialty-name">Gastroenterology</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#gi-meds">PPIs/Lactulose/Octreotide</a>
+                <a href="#bowel-regimen">Bowel Regimen</a>
+                <a href="#antiemetics">Antiemetics</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-nephro">
+            <div class="specialty-header">
+                <span class="specialty-icon">🫘</span>
+                <span class="specialty-name">Nephrology</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#electrolytes">Electrolyte Replacement</a>
+                <a href="#k-binders">Potassium Binders</a>
+                <a href="#phosphate">Phosphate Replacement</a>
+                <a href="#heme-nephro">EPO/Iron/Sevelamer</a>
+                <a href="#cardiac-antihypertensives">ACEi/ARB/Diuretics</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-endo">
+            <div class="specialty-header">
+                <span class="specialty-icon">🦋</span>
+                <span class="specialty-name">Endocrinology</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#diabetes">Diabetes Medications</a>
+                <a href="#endocrine">Thyroid/Insulin/D50</a>
+                <a href="#corticosteroids">Corticosteroids</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-rheum">
+            <div class="specialty-header">
+                <span class="specialty-icon">🦴</span>
+                <span class="specialty-name">Rheumatology</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#dmards-biologics">DMARDs & Biologics</a>
+                <a href="#gout">Gout Medications</a>
+                <a href="#corticosteroids">Corticosteroids</a>
+                <a href="#immunosuppressants">Immunosuppressants</a>
+                <a href="#pain-additional">NSAIDs/Colchicine</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-neuro">
+            <div class="specialty-header">
+                <span class="specialty-icon">🧠</span>
+                <span class="specialty-name">Neurology / Psychiatry</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#anticonvulsants">Anticonvulsants</a>
+                <a href="#neuro-psych">Antipsychotics/tPA</a>
+                <a href="#psych-additional">Antidepressants/Sleep</a>
+                <a href="#pain-additional">Gabapentinoids</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-heme">
+            <div class="specialty-header">
+                <span class="specialty-icon">🩸</span>
+                <span class="specialty-name">Hematology / Oncology</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#anticoagulants">Anticoagulants</a>
+                <a href="#anticoag-additional">HIT Treatment</a>
+                <a href="#hematology">G-CSF/TXA/Vit K/PCC</a>
+                <a href="#heme-nephro">EPO/Iron/DDAVP</a>
+                <a href="#reversal">Reversal Agents</a>
+                <a href="#immunosuppressants">Immunosuppressants</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-tox">
+            <div class="specialty-header">
+                <span class="specialty-icon">☠️</span>
+                <span class="specialty-name">Toxicology / Emergency</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#toxicology">Antidotes</a>
+                <a href="#reversal">Reversal Agents</a>
+                <a href="#misc">Epinephrine/Glucagon</a>
+                <a href="#anesthesia">RSI Agents</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-pain">
+            <div class="specialty-header">
+                <span class="specialty-icon">💊</span>
+                <span class="specialty-name">Pain / Palliative</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#pain-sedation">Opioids/Benzos</a>
+                <a href="#pain-additional">Dilaudid/Toradol/Gabapentin</a>
+                <a href="#antiemetics">Antiemetics</a>
+                <a href="#bowel-regimen">Bowel Regimen</a>
+            </div>
+        </div>
+
+        <div class="specialty-card" id="spec-general">
+            <div class="specialty-header">
+                <span class="specialty-icon">🏠</span>
+                <span class="specialty-name">General / Primary Care</span>
+            </div>
+            <div class="specialty-links">
+                <a href="#vitamins">Vitamins B1/B9/B12</a>
+                <a href="#misc">IV Fluids/Albumin</a>
+                <a href="#antiemetics">Antiemetics</a>
+                <a href="#bowel-regimen">Laxatives</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <div class="nav-section" id="toc">
     <h2 class="nav-title">📚 Quick Navigation by Category</h2>
     <div class="category-grid">
         <a href="#antibiotics-penicillins" class="category-link">
             <span class="category-icon">💊</span>
-            <span class="category-name">Penicillins</span>
-            <span class="category-count">12</span>
+            <span class="category-name">Antibiotics - Penicillins</span>
         </a>
         <a href="#antibiotics-cephalosporins" class="category-link">
             <span class="category-icon">💊</span>
-            <span class="category-name">Cephalosporins</span>
-            <span class="category-count">12</span>
+            <span class="category-name">Antibiotics - Cephalosporins</span>
         </a>
         <a href="#antibiotics-carbapenems" class="category-link">
             <span class="category-icon">💊</span>
-            <span class="category-name">Carbapenems</span>
-            <span class="category-count">4</span>
-        </a>
-        <a href="#antibiotics-fluoroquinolones" class="category-link">
-            <span class="category-icon">💊</span>
-            <span class="category-name">Fluoroquinolones</span>
-            <span class="category-count">5</span>
-        </a>
-        <a href="#antibiotics-aminoglycosides" class="category-link">
-            <span class="category-icon">💊</span>
-            <span class="category-name">Aminoglycosides</span>
-            <span class="category-count">5</span>
-        </a>
-        <a href="#antibiotics-macrolides" class="category-link">
-            <span class="category-icon">💊</span>
-            <span class="category-name">Macrolides</span>
-            <span class="category-count">4</span>
+            <span class="category-name">Antibiotics - Carbapenems</span>
         </a>
         <a href="#antibiotics-glycopeptides" class="category-link">
             <span class="category-icon">💊</span>
-            <span class="category-name">Glycopeptides</span>
-            <span class="category-count">4</span>
+            <span class="category-name">Antibiotics - Glycopeptides</span>
+        </a>
+        <a href="#antibiotics-fluoroquinolones" class="category-link">
+            <span class="category-icon">💊</span>
+            <span class="category-name">Antibiotics - Fluoroquinolones</span>
         </a>
         <a href="#antibiotics-other" class="category-link">
             <span class="category-icon">💊</span>
-            <span class="category-name">Other Antibiotics</span>
-            <span class="category-count">18</span>
+            <span class="category-name">Antibiotics - Other Classes</span>
         </a>
-        <a href="#antifungals" class="category-link">
-            <span class="category-icon">🍄</span>
-            <span class="category-name">Antifungals</span>
-            <span class="category-count">14</span>
-        </a>
-        <a href="#antivirals" class="category-link">
-            <span class="category-icon">🦠</span>
-            <span class="category-name">Antivirals</span>
-            <span class="category-count">22</span>
+        <a href="#antibiotics-additional" class="category-link">
+            <span class="category-icon">💊</span>
+            <span class="category-name">Additional Antibiotics</span>
         </a>
         <a href="#anticoagulants" class="category-link">
             <span class="category-icon">🩸</span>
             <span class="category-name">Anticoagulants</span>
-            <span class="category-count">10</span>
         </a>
-        <a href="#antiplatelets" class="category-link">
+        <a href="#anticoag-additional" class="category-link">
             <span class="category-icon">🩸</span>
-            <span class="category-name">Antiplatelets</span>
-            <span class="category-count">6</span>
+            <span class="category-name">Additional Anticoagulants</span>
         </a>
-        <a href="#thrombolytics" class="category-link">
-            <span class="category-icon">🩸</span>
-            <span class="category-name">Thrombolytics</span>
-            <span class="category-count">4</span>
-        </a>
-        <a href="#reversal-agents" class="category-link">
-            <span class="category-icon">↩️</span>
-            <span class="category-name">Reversal Agents</span>
-            <span class="category-count">11</span>
+        <a href="#cardiac-vasopressors" class="category-link">
+            <span class="category-icon">❤️</span>
+            <span class="category-name">Vasopressors & Inotropes</span>
         </a>
         <a href="#cardiac-antihypertensives" class="category-link">
             <span class="category-icon">❤️</span>
             <span class="category-name">Antihypertensives</span>
-            <span class="category-count">32</span>
         </a>
         <a href="#cardiac-antiarrhythmics" class="category-link">
             <span class="category-icon">❤️</span>
             <span class="category-name">Antiarrhythmics</span>
-            <span class="category-count">11</span>
         </a>
-        <a href="#cardiac-vasopressors" class="category-link">
+        <a href="#cardiac-additional" class="category-link">
             <span class="category-icon">❤️</span>
-            <span class="category-name">Vasopressors/Inotropes</span>
-            <span class="category-count">7</span>
+            <span class="category-name">Additional Cardiac</span>
         </a>
-        <a href="#cardiac-lipids" class="category-link">
-            <span class="category-icon">❤️</span>
-            <span class="category-name">Lipid Agents</span>
-            <span class="category-count">4</span>
+        <a href="#antifungals" class="category-link">
+            <span class="category-icon">🍄</span>
+            <span class="category-name">Antifungals</span>
         </a>
-        <a href="#cardiac-hf" class="category-link">
-            <span class="category-icon">❤️</span>
-            <span class="category-name">Heart Failure</span>
-            <span class="category-count">4</span>
+        <a href="#antivirals" class="category-link">
+            <span class="category-icon">🦠</span>
+            <span class="category-name">Antivirals</span>
         </a>
-        <a href="#diabetes" class="category-link">
-            <span class="category-icon">🩺</span>
-            <span class="category-name">Diabetes Medications</span>
-            <span class="category-count">10</span>
+        <a href="#antiparasitics" class="category-link">
+            <span class="category-icon">🦟</span>
+            <span class="category-name">Antiparasitics</span>
         </a>
         <a href="#corticosteroids" class="category-link">
             <span class="category-icon">💉</span>
             <span class="category-name">Corticosteroids</span>
-            <span class="category-count">7</span>
+        </a>
+        <a href="#diabetes" class="category-link">
+            <span class="category-icon">🍬</span>
+            <span class="category-name">Diabetes Medications</span>
+        </a>
+        <a href="#gi-meds" class="category-link">
+            <span class="category-icon">🫁</span>
+            <span class="category-name">GI / Hepatic</span>
+        </a>
+        <a href="#bowel-regimen" class="category-link">
+            <span class="category-icon">🚽</span>
+            <span class="category-name">Bowel Regimen / GI</span>
         </a>
         <a href="#immunosuppressants" class="category-link">
             <span class="category-icon">🛡️</span>
             <span class="category-name">Immunosuppressants</span>
-            <span class="category-count">10</span>
         </a>
         <a href="#dmards-biologics" class="category-link">
-            <span class="category-icon">🛡️</span>
-            <span class="category-name">DMARDs/Biologics</span>
-            <span class="category-count">25</span>
+            <span class="category-icon">💊</span>
+            <span class="category-name">DMARDs & Biologics</span>
         </a>
-        <a href="#gi-hepatic" class="category-link">
-            <span class="category-icon">🫁</span>
-            <span class="category-name">GI/Hepatic</span>
-            <span class="category-count">25</span>
+        <a href="#pain-sedation" class="category-link">
+            <span class="category-icon">💊</span>
+            <span class="category-name">Pain & Sedation</span>
+        </a>
+        <a href="#pain-additional" class="category-link">
+            <span class="category-icon">💊</span>
+            <span class="category-name">Additional Pain Meds</span>
+        </a>
+        <a href="#icu-sedation" class="category-link">
+            <span class="category-icon">🏥</span>
+            <span class="category-name">ICU Sedation</span>
+        </a>
+        <a href="#anticonvulsants" class="category-link">
+            <span class="category-icon">🧠</span>
+            <span class="category-name">Anticonvulsants</span>
+        </a>
+        <a href="#neuro-psych" class="category-link">
+            <span class="category-icon">🧠</span>
+            <span class="category-name">Neurology / Psychiatry</span>
+        </a>
+        <a href="#psych-additional" class="category-link">
+            <span class="category-icon">🧠</span>
+            <span class="category-name">Additional Psychiatry</span>
+        </a>
+        <a href="#antiemetics" class="category-link">
+            <span class="category-icon">🤢</span>
+            <span class="category-name">Antiemetics</span>
         </a>
         <a href="#pulmonary" class="category-link">
             <span class="category-icon">🫁</span>
-            <span class="category-name">Pulmonary</span>
-            <span class="category-count">7</span>
-        </a>
-        <a href="#nephrology" class="category-link">
-            <span class="category-icon">💧</span>
-            <span class="category-name">Nephrology</span>
-            <span class="category-count">15</span>
-        </a>
-        <a href="#neurology" class="category-link">
-            <span class="category-icon">🧠</span>
-            <span class="category-name">Neurology</span>
-            <span class="category-count">18</span>
-        </a>
-        <a href="#pain" class="category-link">
-            <span class="category-icon">💊</span>
-            <span class="category-name">Pain/Anti-inflammatory</span>
-            <span class="category-count">27</span>
-        </a>
-        <a href="#sedatives" class="category-link">
-            <span class="category-icon">😴</span>
-            <span class="category-name">Sedatives/Anxiolytics</span>
-            <span class="category-count">10</span>
-        </a>
-        <a href="#antipsychotics" class="category-link">
-            <span class="category-icon">🧠</span>
-            <span class="category-name">Antipsychotics</span>
-            <span class="category-count">8</span>
-        </a>
-        <a href="#antidepressants" class="category-link">
-            <span class="category-icon">🧠</span>
-            <span class="category-name">Antidepressants</span>
-            <span class="category-count">17</span>
-        </a>
-        <a href="#anticonvulsants" class="category-link">
-            <span class="category-icon">⚡</span>
-            <span class="category-name">Anticonvulsants</span>
-            <span class="category-count">14</span>
-        </a>
-        <a href="#thyroid" class="category-link">
-            <span class="category-icon">🦋</span>
-            <span class="category-name">Thyroid</span>
-            <span class="category-count">5</span>
-        </a>
-        <a href="#bone-calcium" class="category-link">
-            <span class="category-icon">🦴</span>
-            <span class="category-name">Bone/Calcium</span>
-            <span class="category-count">13</span>
-        </a>
-        <a href="#gout" class="category-link">
-            <span class="category-icon">🦶</span>
-            <span class="category-name">Gout/Uric Acid</span>
-            <span class="category-count">7</span>
-        </a>
-        <a href="#electrolytes" class="category-link">
-            <span class="category-icon">⚡</span>
-            <span class="category-name">Electrolyte Replacement</span>
-            <span class="category-count">8</span>
+            <span class="category-name">Pulmonary Medications</span>
         </a>
         <a href="#hematology" class="category-link">
             <span class="category-icon">🩸</span>
-            <span class="category-name">Hematology</span>
-            <span class="category-count">14</span>
+            <span class="category-name">Hematology Agents</span>
+        </a>
+        <a href="#heme-nephro" class="category-link">
+            <span class="category-icon">🩸</span>
+            <span class="category-name">Heme/Nephrology Agents</span>
+        </a>
+        <a href="#endocrine" class="category-link">
+            <span class="category-icon">🦋</span>
+            <span class="category-name">Endocrine Medications</span>
+        </a>
+        <a href="#gout" class="category-link">
+            <span class="category-icon">💎</span>
+            <span class="category-name">Gout Medications</span>
+        </a>
+        <a href="#electrolytes" class="category-link">
+            <span class="category-icon">⚗️</span>
+            <span class="category-name">Electrolyte Replacement</span>
+        </a>
+        <a href="#k-binders" class="category-link">
+            <span class="category-icon">⚗️</span>
+            <span class="category-name">Potassium Binders</span>
+        </a>
+        <a href="#phosphate" class="category-link">
+            <span class="category-icon">⚗️</span>
+            <span class="category-name">Phosphate Replacement</span>
         </a>
         <a href="#toxicology" class="category-link">
             <span class="category-icon">☠️</span>
-            <span class="category-name">Toxicology/Antidotes</span>
-            <span class="category-count">20</span>
+            <span class="category-name">Toxicology & Antidotes</span>
         </a>
         <a href="#anesthesia" class="category-link">
-            <span class="category-icon">💉</span>
-            <span class="category-name">Anesthesia/Paralytics</span>
-            <span class="category-count">8</span>
+            <span class="category-icon">💨</span>
+            <span class="category-name">Anesthesia / Paralytics</span>
+        </a>
+        <a href="#reversal" class="category-link">
+            <span class="category-icon">↩️</span>
+            <span class="category-name">Reversal Agents</span>
+        </a>
+        <a href="#vitamins" class="category-link">
+            <span class="category-icon">💊</span>
+            <span class="category-name">Vitamins & Supplements</span>
+        </a>
+        <a href="#misc" class="category-link">
+            <span class="category-icon">📦</span>
+            <span class="category-name">Miscellaneous</span>
         </a>
     </div>
 </div>
-
 
 <!-- ======================= ANTIBIOTICS - PENICILLINS ======================= -->
 <div class="drug-category" id="antibiotics-penicillins">
@@ -867,6 +1108,17 @@
                             <tr><td>CrCl 15-29</td><td>1.5g IV q12h</td></tr>
                             <tr><td>CrCl &lt;15</td><td>1.5g IV q24h</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Diarrhea, GI upset</li>
+                            <li>Rash, hypersensitivity</li>
+                            <li>C. diff colitis</li>
+                            <li>Seizures (high doses, renal impairment)</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Sulbactam component has intrinsic activity against Acinetobacter - use high-dose sulbactam (9g/day) for MDR Acinetobacter infections</div>
@@ -1067,7 +1319,17 @@
                         <p>Duration: 5-10 days for uncomplicated SSTI</p>
                     </div>
                 </div>
-                <div class="pearl-box">Must take on empty stomach (1hr before or 2hr after meals) - food significantly reduces absorption</div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>GI upset, nausea, diarrhea</li>
+                            <li>Hypersensitivity reactions (rash, anaphylaxis rare)</li>
+                            <li>Hepatotoxicity (rare, cholestatic)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pearl-box">Must take on empty stomach (1hr before or 2hr after meals) - food significantly reduces absorption. QID dosing limits adherence.</div>
             </div>
         </div>
 
@@ -1107,6 +1369,17 @@
                         </table>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Diarrhea, GI upset</li>
+                            <li>Rash (common; "amox rash" in EBV infection)</li>
+                            <li>Hypersensitivity reactions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pearl-box">Maculopapular rash occurs in 70-100% of patients with EBV (mono) given amoxicillin - this is NOT a true allergy (type IV reaction). Avoid unnecessary penicillin allergy labels.</div>
             </div>
         </div>
 
@@ -1241,6 +1514,10 @@
             </div>
             <div class="drug-body">
                 <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Binds PBPs, inhibits cell wall synthesis. 1st gen = excellent gram-positive (MSSA, strep), limited gram-negative.</div>
+                </div>
+                <div class="drug-section">
                     <div class="drug-section-title">🎯 Spectrum & Indications</div>
                     <div class="drug-section-content">
                         <ul>
@@ -1259,6 +1536,16 @@
                             <tr><td>UTI (uncomplicated)</td><td>500mg PO BID × 3-7 days</td></tr>
                             <tr><td>Strep pharyngitis</td><td>500mg PO BID × 10 days</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>GI upset, diarrhea</li>
+                            <li>Hypersensitivity (cross-reactivity with PCN ~1-2%)</li>
+                            <li>C. diff (like all antibiotics)</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Non-purulent cellulitis (no abscess) = strep > staph → cephalexin is appropriate. Purulent cellulitis (abscess, pus) = staph likely → needs MRSA coverage (TMP-SMX, doxy)</div>
@@ -1399,6 +1686,10 @@
             </div>
             <div class="drug-body">
                 <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Binds PBPs, inhibits cell wall synthesis. Anti-pseudomonal 3rd gen with enhanced gram-negative activity.</div>
+                </div>
+                <div class="drug-section">
                     <div class="drug-section-title">🎯 Spectrum & Indications</div>
                     <div class="drug-section-content">
                         <ul>
@@ -1422,6 +1713,16 @@
                         </table>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Diarrhea, C. diff</li>
+                            <li>Hypersensitivity, rash</li>
+                            <li>Neurotoxicity (seizures, encephalopathy in renal failure)</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Ceftazidime has WEAK gram-positive activity - do not use as monotherapy when gram-positives are suspected</div>
             </div>
         </div>
@@ -1436,10 +1737,14 @@
             </div>
             <div class="drug-body">
                 <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Binds PBPs, inhibits cell wall synthesis. 3rd gen = enhanced gram-negative, good CNS penetration.</div>
+                </div>
+                <div class="drug-section">
                     <div class="drug-section-title">🎯 Spectrum & Indications</div>
                     <div class="drug-section-content">
                         <ul>
-                            <li>Similar to ceftriaxone but shorter half-life (q8h dosing)</li>
+                            <li>Similar to ceftriaxone but shorter half-life (q6-8h dosing)</li>
                             <li><strong>Preferred in neonates</strong> (no biliary sludging like ceftriaxone)</li>
                             <li>Meningitis, serious gram-negative infections</li>
                         </ul>
@@ -1448,10 +1753,22 @@
                 <div class="drug-section">
                     <div class="drug-section-title">💉 Dosing</div>
                     <div class="drug-section-content">
-                        <p>1-2g IV q6-8h</p>
+                        <p>1-2g IV q6-8h (standard infections)</p>
                         <p>Meningitis: 2g IV q4-6h</p>
+                        <p><strong>Renal adjustment:</strong> CrCl <20: reduce frequency</p>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Hypersensitivity, rash</li>
+                            <li>Diarrhea, C. diff</li>
+                            <li>Leukopenia (prolonged use)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="pearl-box">Use instead of ceftriaxone in neonates - ceftriaxone causes biliary sludging and displaces bilirubin from albumin (kernicterus risk).</div>
             </div>
         </div>
 
@@ -1490,6 +1807,17 @@
                             <tr><td>CrCl 15-30</td><td>300mg IV q12h</td></tr>
                             <tr><td>HD</td><td>200mg IV q12h</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Diarrhea, nausea</li>
+                            <li>Rash, hypersensitivity</li>
+                            <li>Positive direct Coombs test (rare hemolytic anemia)</li>
+                            <li>C. diff colitis</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Ceftaroline is the only β-lactam with MRSA activity. Consider for MRSA pneumonia as alternative to vancomycin/linezolid.</div>
@@ -1649,6 +1977,17 @@
                         <p>Can give IM for OPAT (mix with lidocaine)</p>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Diarrhea, nausea</li>
+                            <li>Seizures (rare, caution in renal impairment/CNS disorders)</li>
+                            <li>C. diff colitis</li>
+                            <li>Injection site pain (IM)</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Ertapenem has NO Pseudomonas coverage - do not use for suspected Pseudomonas infections. Great for OPAT due to once-daily dosing.</div>
             </div>
         </div>
@@ -1774,6 +2113,17 @@
                         </table>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Nausea, headache</li>
+                            <li>Infusion reactions (slow infusion rate)</li>
+                            <li>Diarrhea</li>
+                            <li>Generally well-tolerated</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Dalbavancin allows completion of MRSA treatment with 1-2 IV doses - ideal for patients with adherence concerns, IV access issues, or preference to avoid daily antibiotics.</div>
             </div>
         </div>
@@ -1788,11 +2138,16 @@
             </div>
             <div class="drug-body">
                 <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Lipoglycopeptide with ultra-long half-life (~245 hours). Inhibits cell wall synthesis + disrupts membrane integrity (dual mechanism).</div>
+                </div>
+                <div class="drug-section">
                     <div class="drug-section-title">🎯 Spectrum & Indications</div>
                     <div class="drug-section-content">
                         <ul>
-                            <li>Single-dose lipoglycopeptide for MRSA SSTI</li>
-                            <li>Similar coverage to dalbavancin</li>
+                            <li><strong>Coverage:</strong> MRSA, MSSA, Streptococci (including VRE with vanA - unlike dalbavancin)</li>
+                            <li><strong>FDA indication:</strong> Acute bacterial skin/soft tissue infections</li>
+                            <li><strong>Advantage:</strong> Single-dose treatment</li>
                         </ul>
                     </div>
                 </div>
@@ -1800,9 +2155,21 @@
                     <div class="drug-section-title">💉 Dosing</div>
                     <div class="drug-section-content">
                         <p>1200mg IV × 1 (infuse over 3 hours)</p>
+                        <p>No dose adjustment for renal impairment</p>
                     </div>
                 </div>
-                <div class="warning-box">Oritavancin interferes with coagulation tests (PT/INR, aPTT) for up to 5 days after administration - use alternative anticoagulation monitoring if needed.</div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Nausea, headache, vomiting</li>
+                            <li>Infusion reactions</li>
+                            <li>Limb/subcutaneous abscess</li>
+                            <li><strong>Interferes with coagulation tests</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="warning-box">Oritavancin interferes with coagulation tests (PT/INR, aPTT) for up to 5 days after administration - use alternative anticoagulation monitoring if needed. Avoid in patients on IV unfractionated heparin.</div>
             </div>
         </div>
 
@@ -1942,6 +2309,10 @@
                 <span class="drug-toggle">▶</span>
             </div>
             <div class="drug-body">
+                <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Inhibits DNA gyrase (gram-negative) and topoisomerase IV (gram-positive). Enhanced gram-positive activity compared to ciprofloxacin.</div>
+                </div>
                 <div class="drug-section">
                     <div class="drug-section-title">🎯 Spectrum & Indications</div>
                     <div class="drug-section-content">
@@ -2613,6 +2984,10 @@
             </div>
             <div class="drug-body">
                 <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Direct, selective factor Xa inhibitor. Oral, once-daily dosing. Partially renally cleared (~36%).</div>
+                </div>
+                <div class="drug-section">
                     <div class="drug-section-title">🎯 Indications & Dosing</div>
                     <div class="drug-section-content">
                         <table class="dosing-table">
@@ -2774,6 +3149,16 @@
                     <div class="drug-section-content">
                         <p><strong>Septic shock:</strong> 0.03-0.04 units/min (fixed dose, no titration)</p>
                         <p><strong>Variceal bleeding:</strong> 0.2-0.4 units/min</p>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Digital/mesenteric ischemia (vasoconstriction)</li>
+                            <li>Hyponatremia (V2 effect at high doses)</li>
+                            <li>Arrhythmias</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Vasopressin is used at FIXED dose (0.03-0.04 units/min) in septic shock - not titrated. Add when norepinephrine dose is escalating to reduce catecholamine requirements.</div>
@@ -2952,6 +3337,10 @@
                 <span class="drug-toggle">▶</span>
             </div>
             <div class="drug-body">
+                <div class="drug-section">
+                    <div class="drug-section-title">⚙️ Mechanism</div>
+                    <div class="drug-section-content">Inhibits fungal CYP450-dependent 14α-demethylase → blocks ergosterol synthesis → fungistatic (fungicidal vs Aspergillus). Broad spectrum triazole.</div>
+                </div>
                 <div class="drug-section">
                     <div class="drug-section-title">🎯 Spectrum & Indications</div>
                     <div class="drug-section-content">
@@ -3153,6 +3542,17 @@
                         </table>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Hyperglycemia (monitor in diabetics)</li>
+                            <li>Immunosuppression, increased infection risk</li>
+                            <li>Insomnia, psychiatric effects, delirium</li>
+                            <li>Long-term: adrenal suppression, osteoporosis, AVN</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Dexamethasone for bacterial meningitis: Give 15-20 min BEFORE first antibiotic dose - reduces hearing loss and mortality in pneumococcal meningitis.</div>
                 <div class="cross-links">
                     <div class="cross-links-title">📎 Referenced in:</div>
@@ -3192,6 +3592,17 @@
                             <tr><td>Stress dosing (major surgery)</td><td>50-100 mg IV q8h × 1-3 days</td></tr>
                             <tr><td>Physiologic replacement</td><td>15-25 mg PO daily (in divided doses)</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Hyperglycemia (monitor closely)</li>
+                            <li>Fluid retention, hypokalemia (mineralocorticoid effect)</li>
+                            <li>Immunosuppression</li>
+                            <li>Avoid abrupt discontinuation (adrenal suppression)</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Hydrocortisone is preferred for adrenal insufficiency because it provides both glucocorticoid and mineralocorticoid activity. In septic shock, use for refractory hypotension on escalating vasopressors.</div>
@@ -3465,6 +3876,17 @@
                         <p>Take with food to slow absorption and reduce orthostatic hypotension</p>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Orthostatic hypotension, dizziness (α-blockade)</li>
+                            <li>Bradycardia, fatigue</li>
+                            <li>Bronchospasm (caution in asthma/COPD)</li>
+                            <li>May mask hypoglycemia symptoms</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Carvedilol has α-blocking (vasodilating) effect - may cause more orthostatic hypotension than metoprolol. Take with food. Both have equal mortality benefit in HFrEF.</div>
             </div>
         </div>
@@ -3502,6 +3924,17 @@
                             <tr><td>IV infusion</td><td>0.5-2 mg/min</td></tr>
                             <tr><td>PO</td><td>100-400 mg BID</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Orthostatic hypotension</li>
+                            <li>Bradycardia</li>
+                            <li>Bronchospasm (avoid in severe asthma)</li>
+                            <li>Nausea, scalp tingling</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Labetalol is preferred for hypertensive emergencies in pregnancy (preeclampsia/eclampsia). Also first-line for most other HTN emergencies.</div>
@@ -4129,6 +4562,17 @@
                         </ul>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li><strong>Hypoglycemia</strong> (main risk - especially if meal delayed/missed)</li>
+                            <li>Injection site reactions</li>
+                            <li>Weight gain</li>
+                            <li>Hypokalemia (shifts K+ intracellularly)</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Rapid-acting insulins (lispro, aspart, glulisine) are preferred over regular insulin for mealtime dosing - better match to postprandial glucose and less late hypoglycemia.</div>
             </div>
         </div>
@@ -4292,6 +4736,17 @@
                         </table>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Generally very well-tolerated (minimal absorption)</li>
+                            <li>Nausea, flatulence</li>
+                            <li>Peripheral edema</li>
+                            <li>C. diff (rare, but possible)</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Rifaximin reduces recurrent HE by ~50% when added to lactulose. Very expensive but effective - reserve for recurrent HE after lactulose optimization.</div>
             </div>
         </div>
@@ -4330,6 +4785,17 @@
                             <tr><td>Carcinoid crisis prevention</td><td>250-500 mcg IV before procedures</td></tr>
                             <tr><td>SU overdose</td><td>50-100 mcg SubQ q6-12h</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Bradycardia (especially IV bolus)</li>
+                            <li>Hyperglycemia or hypoglycemia (alters insulin/glucagon)</li>
+                            <li>Nausea, abdominal pain</li>
+                            <li>Gallstones/biliary sludge (long-term use)</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">For variceal bleeding: Start octreotide immediately (don't wait for endoscopy) + antibiotics + PPI. Continue for 3-5 days.</div>
@@ -5360,6 +5826,17 @@
                         <p><strong>During dialysis:</strong> q4h dosing (drug removed by HD)</p>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Headache, nausea</li>
+                            <li>Injection site reactions</li>
+                            <li>Rash, eosinophilia (rare)</li>
+                            <li>Generally well-tolerated</li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="pearl-box">Fomepizole is preferred over ethanol infusion - easier to dose, no CNS depression. Start empirically if toxic alcohol suspected while awaiting levels. Dialysis indicated for severe acidosis, renal failure, visual symptoms (methanol), or high levels.</div>
                 <div class="cross-links">
                     <div class="cross-links-title">📎 Referenced in:</div>
@@ -5978,6 +6455,17 @@
                             <tr><td>MDI</td><td>4-8 puffs q20min × 3</td></tr>
                             <tr><td>DuoNeb (with albuterol)</td><td>3 mL (ipratropium 0.5 mg + albuterol 2.5 mg)</td></tr>
                         </table>
+                    </div>
+                </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Dry mouth (most common)</li>
+                            <li>Urinary retention (caution in BPH)</li>
+                            <li>Paradoxical bronchospasm (rare)</li>
+                            <li>Avoid in narrow-angle glaucoma</li>
+                        </ul>
                     </div>
                 </div>
                 <div class="pearl-box">Ipratropium + albuterol more effective than either alone in COPD exacerbations. In asthma, add ipratropium only for moderate-severe exacerbations.</div>
@@ -6683,6 +7171,17 @@
                         <p>No dose adjustment for mild-moderate renal impairment</p>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Gout flares (during initiation - use prophylaxis)</li>
+                            <li>LFT elevations</li>
+                            <li>Nausea, arthralgias</li>
+                            <li><strong>Cardiovascular death risk (black box warning)</strong></li>
+                        </ul>
+                    </div>
+                </div>
                 <div class="black-box">FDA black box for cardiovascular death: CARES trial showed higher CV death with febuxostat vs allopurinol. Reserve for allopurinol failure/intolerance.</div>
                 <div class="pearl-box">Febuxostat is second-line due to CV concerns. Advantage: Can use in CKD without dose adjustment (hepatic metabolism).</div>
             </div>
@@ -6796,6 +7295,18 @@
                         </ul>
                     </div>
                 </div>
+                <div class="drug-section">
+                    <div class="drug-section-title">⚠️ Side Effects</div>
+                    <div class="drug-section-content">
+                        <ul>
+                            <li>Prolonged paralysis (hepatic/renal impairment, hypothermia)</li>
+                            <li>Tachycardia (mild vagolytic effect)</li>
+                            <li>Awareness if inadequate sedation (patient cannot move but is awake)</li>
+                            <li>Anaphylaxis (rare)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="warning-box">ALWAYS ensure adequate sedation before paralysis. Monitor with train-of-four. Prolonged use associated with ICU-acquired weakness.</div>
                 <div class="pearl-box">High-dose rocuronium (1.2 mg/kg) + sugammadex available is now preferred over succinylcholine for RSI in many centers - similar onset, safer profile, complete reversal possible.</div>
             </div>
         </div>
@@ -10085,6 +10596,13 @@ document.addEventListener('DOMContentLoaded', function() {
         searchInput.value = '';
         searchInput.dispatchEvent(new Event('input'));
         searchInput.focus();
+    });
+});
+
+// Toggle navigation sections (specialty and category)
+document.querySelectorAll('.nav-section .nav-title').forEach(title => {
+    title.addEventListener('click', function() {
+        this.parentElement.classList.toggle('collapsed');
     });
 });
 </script>
